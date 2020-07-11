@@ -1,0 +1,20 @@
+#navbar {
+    display: flex;
+    font-size: 1.5rem;
+    
+    justify-content: space-between;
+
+    margin-left: 40px;
+    margin-right: 40px;
+
+    border-bottom: 2px solid black;
+}
+
+#navbar div {
+    display: flex;
+
+}
+
+#nav-projects {
+    margin-right: 20px;
+}
