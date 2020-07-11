@@ -10,6 +10,11 @@
     border-bottom: 2px solid black;
 }
 
+#taskMe-logo {
+    margin-left: 10
+    transform: translateY(150%);
+}
+
 #navbar div {
     display: flex;
 
@@ -17,4 +22,82 @@
 
 #nav-projects {
     margin-right: 20px;
+}
+
+#content {
+    margin-left: 40px;
+    display: flex;
+    height: 90vh;
+}
+
+#div-list-head {
+    display: flex;
+    border-bottom: 2px solid black;
+
+}
+
+#svg-add {
+    display: block;
+    cursor: pointer;
+    width: 18px;
+    margin-left: 20px;
+
+    transform: translateY(95%);
+    
+}
+
+.div-project {
+    border-bottom: 0.5px solid black;
+    cursor: pointer;
+}
+.div-project p {
+    margin: 0;
+}
+
+#div-items {
+    width: 100%;
+}
+#div-items h2{
+    text-align: center;
+}
+
+
+.div-task {
+    text-align: center;
+}
+
+#div-popup {
+    z-index: 9999;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 25px;
+    padding-bottom: 10px;
+    text-align: center;
+
+    border-radius: 25px;
+    border: 2px solid #6d6969;
+}
+
+#div-popup p {
+    margin-bottom: 5px;
+}
+
+#div-popup-btns {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 0px;
+
+}
+
+.svg-btn {
+    cursor: pointer;
+}
+
+.svg-btn :hover {
+    fill: black;
+    stroke: white;
 }

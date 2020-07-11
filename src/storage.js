@@ -1,12 +1,12 @@
 import Project from './project';
 import Task from './task';
 
-const projects = [];
-const notes = [];
+let projects = [];
+let notes = [];
 
 const addProject = (project) => {
     console.log('addProject: adding ' + project);
-    projects.push(projects);
+    projects.push(project);
     localStorage.projects = JSON.stringify(projects);
 }
 
@@ -55,4 +55,4 @@ const printNotes = () => {
 }
 
 
-export {printProject, printNotes, loadStorage, addProject, addNote}
+export {printProject, printNotes, loadStorage, addProject, addNote, projects, notes}

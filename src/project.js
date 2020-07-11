@@ -5,6 +5,10 @@ class Project {
         this.dueDate = dueDate;
         this.tasks = [];
     }
+
+    addTask(task) {
+        this.tasks.push(task);
+    }
 }
 
 export default Project;
