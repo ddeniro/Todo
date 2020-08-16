@@ -1,4 +1,5 @@
 import {projects, notes, printNotes, printProject, addProject} from './storage';
+import Project from './project';
 
 const content = document.getElementById('content');
 
@@ -67,11 +68,16 @@ const renderProjectList = () => {
 const renderProjectTasks = (project) => {
     clearDivItems();
     const divItems = document.getElementById('div-items');
+    const divItemsHeader = document.getElementById('div-items-header');
     const addTaskSvg = document.createElement('svg');
+    addTaskSvg.id = 'addtask-btn'
     addTaskSvg.className = 'svg-btn';
     addTaskSvg.innerHTML = '<svg id="svg-add" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>' 
-    divItems.appendChild(addTaskSvg);
 
+    const divTasks = document.createElement('div');
+    divTasks.id = 'div-tasks'
+
+    divItems.appendChild(divTasks);
     //create each task in the DOM.
     project.tasks.forEach(task => { 
         const divTask = document.createElement('div');
@@ -89,9 +95,10 @@ const renderProjectTasks = (project) => {
             dueDate.innerText = task.dueDate;
             divTask.appendChild(dueDate);
         }
-        divItems.appendChild(divTask);
+        divTasks.appendChild(divTask);
     })
 
+    divItemsHeader.appendChild(addTaskSvg);
 }
 
 const clearDivItems = () => {
@@ -99,9 +106,14 @@ const clearDivItems = () => {
     divItems.innerHTML = '';
     const divItemsTitle = document.createElement('h2');
 
+    const divItemsHeader = document.createElement('div');
+    divItemsHeader.id = 'div-items-header';
+
     divItemsTitle.innerText = 'Tasks';
 
-    divItems.appendChild(divItemsTitle);
+    divItemsHeader.appendChild(divItemsTitle);
+
+    divItems.appendChild(divItemsHeader);
 }
 
 const renderPopUp =  (isProject) => {
@@ -119,17 +131,19 @@ const renderPopUp =  (isProject) => {
     const btnCreate = document.createElement('button');
     btnCreate.innerText = 'Add';
 
+    const descriptionTitle = document.createElement('p');
+    descriptionTitle.innerText = 'Description';
+    const descriptionField = document.createElement('input');
+    descriptionField.placeholder = 'A description about some project.';
+
     divPopUp.appendChild(itemTitle);
     divPopUp.appendChild(itemTitleField);
 
 
     if (isProject) {
+        console.log(isProject);
         itemTitle.innerText = 'Project Title';
         itemTitleField.placeholder = 'Some Project';
-        const descriptionTitle = document.createElement('p');
-        descriptionTitle.innerText = 'Description';
-        const descriptionField = document.createElement('input');
-        descriptionField.placeholder = 'A description about some project.';
 
         divPopUp.appendChild(descriptionTitle);
         divPopUp.appendChild(descriptionField);
@@ -176,7 +190,20 @@ const renderPopUp =  (isProject) => {
     document.body.appendChild(divPopUp);
 
     acceptSvg.addEventListener('click', () => {
+        //This needs to handle TASK AND PROJECT creation. Currently it only handles creating new projects.
+        if (isProject) {
+            console.log('Adding new Project');
+            const newProject = new Project(itemTitleField.value, descriptionField.value, dueDateField.value );
+            console.log('newProject:', newProject);
+            addProject(newProject);
+        }
+        else {
+            console.log('Adding new Task.');
+        }
         console.log('WOOO');
+
+        clearPopUp();
+        renderProjectList();
     })
 
     closeSvg.addEventListener('click', () => {

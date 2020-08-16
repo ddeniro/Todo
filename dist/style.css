@@ -61,6 +61,11 @@
     text-align: center;
 }
 
+#div-items-header {
+    display: flex;
+    justify-content: center;
+}
+
 
 .div-task {
     text-align: center;
@@ -100,4 +105,8 @@
 .svg-btn :hover {
     fill: black;
     stroke: white;
+}
+
+#addtask-btn {
+    width:
 }
