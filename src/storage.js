@@ -55,4 +55,4 @@ const printNotes = () => {
 }
 
 
-export {printProject, printNotes, loadStorage, addProject, addNote, projects, notes}
+export {printProject, printNotes, loadStorage, addProject, addNote, projects, notes, addTask}

@@ -1,5 +1,6 @@
-import {projects, notes, printNotes, printProject, addProject} from './storage';
+import {projects, notes, printNotes, printProject, addProject, addTask} from './storage';
 import Project from './project';
+import Task from './task';
 
 const content = document.getElementById('content');
 
@@ -61,7 +62,7 @@ const renderProjectList = () => {
 
     addProjectSvg.addEventListener('click', () => {
         console.log('WOOOO!');
-        renderPopUp(true);
+        renderPopUp(projects,true);
     })
 }
 
@@ -86,10 +87,20 @@ const renderProjectTasks = (project) => {
         const taskTitle = document.createElement('h3');
         taskTitle.innerText = task.title;
 
-        const priority = document.createElement('p');
-        priority.innerText = task.priority;
+        //const priority = document.createElement('p');
+        //priority.innerText = task.priority;
         divTask.appendChild(taskTitle);
-        divTask.appendChild(priority);
+        //divTask.appendChild(priority);
+        const priority = task.priority;
+        if (priority === 'high') {
+            divTask.classList.add('high');
+        }
+        if (priority === 'medium') {
+            divTask.classList.add('medium');
+        }
+        if (priority === 'low') {
+            divTask.classList.add('low');
+        }
         if(task.dueDate != null) {
             const dueDate = document.createElement('p');
             dueDate.innerText = task.dueDate;
@@ -99,6 +110,10 @@ const renderProjectTasks = (project) => {
     })
 
     divItemsHeader.appendChild(addTaskSvg);
+
+    addTaskSvg.addEventListener('click', () => {
+        renderPopUp(project, false);
+    })
 }
 
 const clearDivItems = () => {
@@ -116,7 +131,7 @@ const clearDivItems = () => {
     divItems.appendChild(divItemsHeader);
 }
 
-const renderPopUp =  (isProject) => {
+const renderPopUp =  (project, isProject) => {
     clearPopUp();
     const divPopUp = document.createElement('div');
     divPopUp.id= 'div-popup';
@@ -159,16 +174,20 @@ const renderPopUp =  (isProject) => {
         const medPriority = document.createElement('option');
         const lowPriority = document.createElement('option');
 
-        highPriority.value = 'High';
+        highPriority.value = 'high';
         highPriority.innerText = 'High';
-        medPriority.value = 'Medium';
+        medPriority.value = 'medium';
         medPriority.innerText = 'Medium';
-        lowPriority.value = 'Low';
+        lowPriority.value = 'low';
         lowPriority.innerText = 'Low';
 
         selectPriority.appendChild(highPriority);
         selectPriority.appendChild(medPriority);
         selectPriority.appendChild(lowPriority);
+        selectPriority.id = 'select-priority'
+
+        divPopUp.appendChild(priorityTitle);
+        divPopUp.appendChild(selectPriority);
 
     }
     divPopUp.appendChild(dueDateTitle);
@@ -198,11 +217,16 @@ const renderPopUp =  (isProject) => {
             addProject(newProject);
         }
         else {
+            const selectPriority = document.getElementById('select-priority');
             console.log('Adding new Task.');
+            const newTask = new Task(itemTitleField.value, selectPriority.value, dueDateField.value, false);
+            addTask(project, newTask);
+            
         }
         console.log('WOOO');
 
         clearPopUp();
+        clearContent();
         renderProjectList();
     })
 
